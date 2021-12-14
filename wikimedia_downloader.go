@@ -18,7 +18,7 @@ import (
 
 type Input struct {
 	WikimediaFileName string // Should be of the form File:Piranga_ludoviciana_map.svg
-	OutputFilePath    string // Optional. Will be set to something in tmp/wikimedia_downloader if not set.
+	OutputFilePath    string // Optional. Will be set to something in /out/wikimedia_downloader if not set.
 }
 
 type Output struct {
@@ -34,7 +34,7 @@ func (input *Input) Execute() (*Output, error) {
 	suffix := strings.Split(input.WikimediaFileName, ".")[1]
 	outputFilePath := input.OutputFilePath
 	if outputFilePath == "" {
-		outputFilePath = "/tmp/wikimedia_downloader/" + strconv.FormatInt(time.Now().Unix(), 10) + "." + suffix
+		outputFilePath = "/out/wikimedia_downloader/" + strconv.FormatInt(time.Now().Unix(), 10) + "." + suffix
 	}
 	err := os.MkdirAll(filepath.Dir(outputFilePath), 0777)
 	if err != nil {
