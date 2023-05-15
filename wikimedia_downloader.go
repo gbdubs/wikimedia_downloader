@@ -22,8 +22,7 @@ type Input struct {
 }
 
 type Output struct {
-	OutputFilePath string
-	Attribution    attributions.Attribution // Attributions will also be written to OutputFilePath.atrib
+	File attributions.AttributedFilePointer
 }
 
 const url = "https://en.wikipedia.org/w/api.php"
@@ -98,12 +97,11 @@ func (input *Input) Execute() (*Output, error) {
 	if err != nil {
 		return output, err
 	}
-	err = attribution.WriteTo(outputFilePath)
+	afp, err := attributions.AttributeLocalFile(outputFilePath, attribution)
 	if err != nil {
 		return output, err
 	}
-	output.Attribution = attribution
-	output.OutputFilePath = outputFilePath
+	output.File = afp
 	return output, nil
 }
 
